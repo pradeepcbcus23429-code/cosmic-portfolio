@@ -1,0 +1,184 @@
+type WriteError = 
+ variant {
+   invalidInput: text;
+   notAuthorized;
+   notFound: Id;
+ };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Timestamp = nat;
+type SkillGroupInput = 
+ record {
+   category: text;
+   order: nat;
+   skills: vec Skill;
+ };
+type SkillGroup = 
+ record {
+   category: text;
+   id: Id;
+   order: nat;
+   skills: vec Skill;
+ };
+type Skill = 
+ record {
+   name: text;
+   order: nat;
+   proficiency: nat;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type ProjectLink = 
+ record {
+   labelText: text;
+   url: text;
+ };
+type ProjectInput = 
+ record {
+   description: text;
+   imageRef: opt text;
+   links: vec ProjectLink;
+   order: nat;
+   summary: text;
+   techTags: vec text;
+   title: text;
+ };
+type Project = 
+ record {
+   description: text;
+   id: Id;
+   imageRef: opt text;
+   links: vec ProjectLink;
+   order: nat;
+   summary: text;
+   techTags: vec text;
+   title: text;
+ };
+type Id = nat;
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type ContactMessage = 
+ record {
+   email: text;
+   id: Id;
+   message: text;
+   name: text;
+   read: bool;
+   submittedAt: Timestamp;
+ };
+type ContactInput = 
+ record {
+   email: text;
+   message: text;
+   name: text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Creates a project. Admin only.
+  createProject: (input: ProjectInput) -> (variant {
+                                             err: WriteError;
+                                             ok: Id;
+                                           });
+  /// Creates a skill group. Admin only.
+  createSkillGroup: (input: SkillGroupInput) ->
+   (variant {
+      err: WriteError;
+      ok: Id;
+    });
+  /// Deletes a project. Admin only.
+  deleteProject: (id: Id) -> (variant {
+                                err: WriteError;
+                                ok;
+                              });
+  /// Deletes a skill group. Admin only.
+  deleteSkillGroup: (id: Id) -> (variant {
+                                   err: WriteError;
+                                   ok;
+                                 });
+  execute: (qJson: text) -> (Result) query;
+  /// Static Markdown documentation of this backend's public API.
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// A single project by id.
+  getProject: (id: Id) -> (opt Project) query;
+  isCallerAdmin: () -> (bool) query;
+  /// Lists contact messages, newest first. Admin only.
+  listContactMessages: () -> (vec ContactMessage) query;
+  /// All projects, ordered for display.
+  listProjects: () -> (vec Project) query;
+  /// All skill groups with their skills, ordered for display.
+  listSkillGroups: () -> (vec SkillGroup) query;
+  /// Marks a contact message as read. Admin only.
+  markMessageRead: (id: Id) -> (variant {
+                                  err: WriteError;
+                                  ok;
+                                });
+  schema: () -> (text) query;
+  /// Submits a contact message from the public contact form.
+  submitContactMessage: (input: ContactInput) ->
+   (variant {
+      err: WriteError;
+      ok: Id;
+    });
+  /// Updates a project. Admin only.
+  updateProject: (id: Id, input: ProjectInput) ->
+   (variant {
+      err: WriteError;
+      ok;
+    });
+  /// Updates a skill group. Admin only.
+  updateSkillGroup: (id: Id, input: SkillGroupInput) ->
+   (variant {
+      err: WriteError;
+      ok;
+    });
+}

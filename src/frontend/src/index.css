@@ -1,0 +1,236 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/assets/fonts/Satoshi.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk";
+    --font-body: "Satoshi";
+    --font-mono: "JetBrains Mono";
+    --radius: 0.75rem;
+
+    /* Deep space surfaces */
+    --background: 0.13 0.025 265;
+    --foreground: 0.94 0.012 265;
+    --card: 0.17 0.028 265;
+    --card-foreground: 0.94 0.012 265;
+    --popover: 0.19 0.03 265;
+    --popover-foreground: 0.94 0.012 265;
+
+    /* Luminous cyan primary */
+    --primary: 0.82 0.14 195;
+    --primary-foreground: 0.13 0.025 195;
+
+    /* Violet secondary */
+    --secondary: 0.24 0.035 275;
+    --secondary-foreground: 0.88 0.015 275;
+    --muted: 0.22 0.03 265;
+    --muted-foreground: 0.62 0.02 265;
+
+    /* Accent = violet glow */
+    --accent: 0.68 0.2 295;
+    --accent-foreground: 0.13 0.025 295;
+
+    --destructive: 0.62 0.2 20;
+    --destructive-foreground: 0.96 0.01 20;
+    --success: 0.72 0.16 155;
+    --warning: 0.78 0.15 80;
+
+    --border: 0.3 0.03 265;
+    --input: 0.3 0.03 265;
+    --ring: 0.82 0.14 195;
+
+    --chart-1: 0.82 0.14 195;
+    --chart-2: 0.68 0.2 295;
+    --chart-3: 0.6 0.16 250;
+    --chart-4: 0.78 0.15 80;
+    --chart-5: 0.72 0.16 155;
+
+    --sidebar: 0.15 0.026 265;
+    --sidebar-foreground: 0.94 0.012 265;
+    --sidebar-primary: 0.82 0.14 195;
+    --sidebar-primary-foreground: 0.13 0.025 195;
+    --sidebar-accent: 0.24 0.035 275;
+    --sidebar-accent-foreground: 0.88 0.015 275;
+    --sidebar-border: 0.3 0.03 265;
+    --sidebar-ring: 0.82 0.14 195;
+
+    /* Cosmic atmosphere */
+    --nebula-cyan: 0.82 0.14 195;
+    --nebula-violet: 0.68 0.2 295;
+    --nebula-indigo: 0.55 0.17 265;
+    --star-core: 0.98 0.02 220;
+    --star-dim: 0.7 0.04 250;
+    --particle: 0.85 0.08 210;
+    --cursor-core: 0.88 0.13 195;
+    --cursor-trail: 0.7 0.18 285;
+    --glass: 0.24 0.03 265;
+
+    --gradient-primary: linear-gradient(
+      120deg,
+      oklch(0.82 0.14 195),
+      oklch(0.68 0.2 295)
+    );
+    --gradient-text: linear-gradient(
+      100deg,
+      oklch(0.96 0.02 220) 0%,
+      oklch(0.85 0.13 200) 45%,
+      oklch(0.72 0.19 295) 100%
+    );
+    --gradient-nebula: radial-gradient(
+        ellipse 80% 55% at 15% 8%,
+        oklch(0.45 0.16 265 / 0.5),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 70% 60% at 88% 22%,
+        oklch(0.5 0.18 300 / 0.38),
+        transparent 62%
+      ),
+      radial-gradient(
+        ellipse 90% 50% at 50% 100%,
+        oklch(0.42 0.14 200 / 0.28),
+        transparent 65%
+      );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.2 0.03 265 / 0.7),
+      oklch(0.15 0.025 265 / 0.7)
+    );
+
+    /* Motion timing + easing */
+    --ease-out-cosmic: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out-cosmic: cubic-bezier(0.65, 0, 0.35, 1);
+    --transition-fast: 150ms var(--ease-out-cosmic);
+    --transition-smooth: 300ms var(--ease-out-cosmic);
+    --transition-slow: 600ms var(--ease-out-cosmic);
+    --duration-drift: 26s;
+    --duration-twinkle: 4s;
+    --duration-shooting: 2.4s;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    background-image: var(--gradient-nebula);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+  }
+  ::selection {
+    background: oklch(var(--primary) / 0.28);
+    color: oklch(var(--foreground));
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: oklch(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(var(--border));
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--primary) / 0.5);
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  .transition-fast {
+    transition: var(--transition-fast);
+  }
+  .ease-cosmic {
+    transition-timing-function: var(--ease-out-cosmic);
+  }
+
+  /* Glass surfaces */
+  .glass {
+    background: oklch(var(--glass) / 0.45);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid oklch(var(--foreground) / 0.08);
+  }
+  .glass-strong {
+    background: oklch(var(--card) / 0.72);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border: 1px solid oklch(var(--foreground) / 0.1);
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+  .bg-nebula {
+    background-image: var(--gradient-nebula);
+  }
+
+  /* Hairline luminous border */
+  .ring-glow {
+    box-shadow: 0 0 0 1px oklch(var(--primary) / 0.35), 0 0 24px -6px
+      oklch(var(--primary) / 0.45);
+  }
+
+  /* Custom cursor: hide native pointer only where the cursor component is active */
+  .cursor-none-desktop {
+    cursor: none;
+  }
+  @media (pointer: coarse) {
+    .cursor-none-desktop {
+      cursor: auto;
+    }
+  }
+
+  /* Reduced motion: tone down ambient animation */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-drift,
+    .animate-drift-slow,
+    .animate-twinkle,
+    .animate-shooting,
+    .animate-float,
+    .animate-pulse-glow,
+    .animate-orbit {
+      animation: none !important;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}

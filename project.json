@@ -1,0 +1,21 @@
+{
+  "overview": "A professional space-themed portfolio site with an animated starfield, custom glowing cursor, and smooth scroll-reveal motion.",
+  "features": [
+    "Animated starfield background with parallax depth and drifting particles",
+    "Custom glowing cursor with a trailing particle effect",
+    "Hero, about, projects, skills, and contact sections",
+    "Project cards that open detailed views with tech tags and links",
+    "Scroll-reveal animations and hover micro-interactions",
+    "Sticky navigation with smooth scrolling and active-section highlighting",
+    "Responsive layout that respects reduced-motion preferences"
+  ],
+  "category": "portfolio",
+  "tags": [
+    "portfolio",
+    "space",
+    "animation",
+    "personal-site",
+    "showcase"
+  ],
+  "last_updated": "2026-09-22T07:16:32.400Z"
+}
